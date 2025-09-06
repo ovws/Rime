@@ -1,0 +1,12 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.17.4
+  generator: "Rime::SwitcherSettings"
+  modified_time: "Sat Sep  6 14:22:33 2025"
+  rime_version: 1.13.1
+patch:
+  schema_list:
+    - {schema: moran}
+    - {schema: moran_japanese}
+    - {schema: tigress}
+    - {schema: tiger}

@@ -1,0 +1,17 @@
+# 所有文本文件默认用 LF
+* text=auto eol=lf
+
+# Windows 脚本可以保留 CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# YAML 强制 LF
+*.yaml text eol=lf
+*.yml  text eol=lf
+
+# Lua 脚本强制 LF
+*.lua text eol=lf
+
+# Markdown / 文本文件 LF
+*.md  text eol=lf
+*.txt text eol=lf
