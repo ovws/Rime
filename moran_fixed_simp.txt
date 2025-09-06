@@ -1,0 +1,18 @@
+# Rime table
+#@/db_name	moran_fixed_simp
+#@/db_type	tabledb
+#@/rime_version	1.8.5
+#@/tick	62
+工具	gsju	1
+恍恍惚惚	hhhh	5
+激活	jiho	3
+斤斤计较	jjjj	36
+企业	qiye	1
+入伏	rufu	1
+实时计算机	uujj	1
+叔叔	uuuu	1
+微信	wx	1
+谢谢	xxxx	9
+业余	yeyu	1
+用法	ysfa	1
+耀	ytg	1
