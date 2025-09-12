@@ -3,9 +3,9 @@ var:
   option:
     full_shape: false
     traditionalization: false
-  previously_selected_schema: tigress
+  previously_selected_schema: moran
   schema_access_time:
-    moran: 1757669914
+    moran: 1757670839
     moran_aux: 1752993553
     moran_fixed: 1716961185
     moran_sentence: 1714354361
