@@ -395,7 +395,7 @@ moran:
   #
   # 詞輔助碼提示僅在開啓 enable_word_filter 時生效
   # 具體提示格式請參考上面「詞輔功能」的說明
-  enable_aux_hint: false
+  enable_aux_hint: true
 
   # 簡快碼提示（包括字和詞）
   # 例如 輸入 yy te er 英特爾 會提示「⚡yte」，即使用 yte 可以打出這個詞
