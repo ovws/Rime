@@ -18,4 +18,4 @@ Thumbs.db
 
 # 本地配置文件
 installation.yaml
-.user.yaml
+user.yaml
