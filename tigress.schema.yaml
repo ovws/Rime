@@ -24,7 +24,7 @@ switches: # 0 默认关，1 默认开
     reset: 0
     states: [ 拼, pīn ]
   - name: emoji_cn  #emoji滤镜
-    reset: 0
+    reset: 1
     states: [ 🈚, 🈶 ]
   - name: chaifen
     reset: 1 
