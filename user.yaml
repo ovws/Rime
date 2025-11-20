@@ -1,12 +1,12 @@
 var:
-  last_build_time: 1761808706
+  last_build_time: 1763631783
   option:
     full_shape: false
     simplification: true
     traditionalization: true
-  previously_selected_schema: tigress
+  previously_selected_schema: moran
   schema_access_time:
-    moran: 1762482738
+    moran: 1763631664
     moran_aux: 1752993553
     moran_fixed: 1716961185
     moran_sentence: 1714354361
