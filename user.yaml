@@ -1,6 +1,7 @@
 var:
-  last_build_time: 1763631783
+  last_build_time: 1766200064
   option:
+    emoji: true
     full_shape: false
     simplification: true
     traditionalization: true
