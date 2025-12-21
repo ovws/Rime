@@ -14,10 +14,10 @@ customization:
   distribution_code_name: Weasel
   distribution_version: 0.17.4
   generator: "Weasel::UIStyleSettings"
-  modified_time: "Sun Dec 21 12:13:56 2025"
+  modified_time: "Sun Dec 21 12:20:16 2025"
   rime_version: 1.13.1
   show_notifications_when: appropriate
   "style/color_scheme": psionics
   "style/color_scheme_dark": nord_dark
 patch:
-  "style/color_scheme": starcraft
+  "style/color_scheme": purity

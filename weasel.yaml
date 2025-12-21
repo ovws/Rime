@@ -594,5 +594,7 @@ preset_color_schemes:
       margin_y: 12,
       round_corner: 0,
       spacing: 10,
+      name: "Windows 10",
       text_color: 0x000000,
     }
+# [End of <preset_color_schemes>]
