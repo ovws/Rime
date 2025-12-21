@@ -1,5 +1,5 @@
 var:
-  last_build_time: 1766250173
+  last_build_time: 1766290244
   option:
     emoji: true
     full_shape: false
@@ -7,10 +7,10 @@ var:
     traditionalization: true
   previously_selected_schema: moran
   schema_access_time:
-    moran: 1763631664
+    moran: 1766288889
     moran_aux: 1752993553
     moran_fixed: 1716961185
     moran_sentence: 1714354361
-    tiger: 1762480418
-    tigress: 1762827992
+    tiger: 1766288886
+    tigress: 1766283724
     zrlf: 1725619667
