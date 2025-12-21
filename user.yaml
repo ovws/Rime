@@ -5,12 +5,12 @@ var:
     full_shape: false
     simplification: true
     traditionalization: true
-  previously_selected_schema: moran
+  previously_selected_schema: tigress
   schema_access_time:
     moran: 1766288889
     moran_aux: 1752993553
     moran_fixed: 1716961185
     moran_sentence: 1714354361
-    tiger: 1766288886
-    tigress: 1766283724
+    tiger: 1766290980
+    tigress: 1766290984
     zrlf: 1725619667
