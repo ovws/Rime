@@ -23,9 +23,9 @@ Moran is an open, [community-maintained](https://zrmfans.cn/book/misc/acknowledg
 
 - [Learn more](https://zrmfans.cn)
 
-| Quick Code                              | Assisted Sentence Composition                               |   |
-|-----------------------------------------|-------------------------------------------------------------|---|
-| ![Quick Code](./etc/screenshot-bql.png) | ![Assisted Sentence Composition](./etc/screenshot-poem.png) |   |
+| Quick Code                              | Assisted Sentence Composition                               |     |
+| --------------------------------------- | ----------------------------------------------------------- | --- |
+| ![Quick Code](./etc/screenshot-bql.png) | ![Assisted Sentence Composition](./etc/screenshot-poem.png) |     |
 
 Assisted Candidate Filtering
 

@@ -2,7 +2,7 @@ customization:
   distribution_code_name: Weasel
   distribution_version: 0.17.4
   generator: "Rime::SwitcherSettings"
-  modified_time: "Fri Dec 19 09:14:19 2025"
+  modified_time: "Sun Dec 21 12:20:48 2025"
   rime_version: 1.13.1
 patch:
   schema_list:
@@ -13,3 +13,4 @@ patch:
     - {schema: moran_aux}
     - {schema: moran_bj}
     - {schema: moran_sentence}
+    - {schema: PY_c}

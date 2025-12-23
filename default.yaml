@@ -1,7 +1,7 @@
 # Rime default settings
 # encoding: utf-8
 
-config_version: '0.40'
+config_version: "0.40"
 
 schema_list:
   - schema: moran
@@ -38,7 +38,7 @@ switcher:
     - unicode_comment
   fold_options: true
   abbreviate_options: true
-  option_list_separator: '／'
+  option_list_separator: "／"
 
 menu:
   page_size: 5

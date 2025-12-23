@@ -28,6 +28,7 @@ switches:
   - name: emoji
     states: [ 🈚, 🈶 ]
   - name: chaifen
+    reset: 1
     states: [ 不拆, 扌斥 ]
   - name: unicode_comment
     states: [ U關, U開 ]
