@@ -36,9 +36,9 @@ style:
   font_face: "霞鹜漫黑, 霞鹜文楷 TC"  # 全局字体
   label_font_face: "霞鹜漫黑, 霞鹜文楷 TC"       # 标签字体
   comment_font_face: "霞鹜漫黑, 霞鹜文楷 TC"     # 注释字体
-  font_point: 18                           # 全局字体字号
-  label_font_point: 16                     # 标签字体字号，不设定 fallback 到 font_point
-  comment_font_point: 14                   # 注释字体字号，不设定 fallback 到 font_point
+  font_point: 20                           # 全局字体字号
+  label_font_point: 18                     # 标签字体字号，不设定 fallback 到 font_point
+  comment_font_point: 16                   # 注释字体字号，不设定 fallback 到 font_point
 
   inline_preedit: true                     # 行内显示预编辑区：true；false
   preedit_type: composition                # 预编辑区内容：composition（编码）； preview（选中的候选）；preview_all（全部候选）
@@ -353,7 +353,7 @@ preset_color_schemes:
     border_height: 4                             # 窗口上下高度，大于圆角半径才生效
     border_width: 4                              # 窗口左右宽度，大于圆角半径才生效
     font_face: "霞鹜漫黑"                      # 候选词字体
-    font_point: 16                               # 候选字大小
+    font_point: 20                               # 候选字大小
     label_font_point: 13                         # 候选编号大小
     text_color: 0x424242                    # 拼音行文字颜色
     back_color: 0x252a2e                    # 候选条背景色
@@ -398,10 +398,10 @@ preset_color_schemes:
     hilited_corner_radius: 5                     # 高亮圆角
     line_spacing: 10                              # 行间距(适用于竖排)
     border_height: 4                             # 窗口上下高度，大于圆角半径才生效
-    border_width: 4                              # 窗口左右宽度，大于圆角半径才生效
+    border_width: 5                              # 窗口左右宽度，大于圆角半径才生效
     font_face: "霞鹜漫黑"                      # 候选词字体
-    font_point: 16                               # 候选字大小
-    label_font_point: 13                         # 候选编号大小
+    font_point: 20                               # 候选字大小
+    label_font_point: 16                         # 候选编号大小
     text_color: 0x424242                    # 拼音行文字颜色
     back_color: 0xFFFFFF                    # 候选条背景色
     border_color: 0xFFFFFF                  # 边框色
