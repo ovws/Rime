@@ -1034,8 +1034,6 @@ preset_color_schemes:
     label_color: 0x777777
     text_color: 0xBBBBBB
 
-
-
 app_options:
   com.apple.Spotlight:
     ascii_mode: true

@@ -1,14 +1,28 @@
 var:
+<<<<<<< HEAD
   last_build_time: 1771123192
+=======
+  last_build_time: 1766290859
+>>>>>>> refs/remotes/origin/master
   option:
+    emoji: true
     full_shape: false
+<<<<<<< HEAD
     traditionalization: false
   previously_selected_schema: moran
   schema_access_time:
     moran: 1758003538
+=======
+    simplification: true
+    traditionalization: true
+  previously_selected_schema: moran_sentence
+  schema_access_time:
+    moran: 1766288889
+>>>>>>> refs/remotes/origin/master
     moran_aux: 1752993553
+    moran_bj: 1766106903
     moran_fixed: 1716961185
-    moran_sentence: 1714354361
-    tiger: 1752993509
-    tigress: 1757670752
+    moran_sentence: 1766106921
+    tiger: 1766290980
+    tigress: 1766290984
     zrlf: 1725619667
