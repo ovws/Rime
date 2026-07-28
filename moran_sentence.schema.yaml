@@ -30,6 +30,7 @@ switches:
   - name: extended_charset
     states: [ 通用, 增廣 ]
   - name: emoji
+    reset: 1
     states: [ 🈚, 🈶 ]
   - name: chaifen
     reset: 1
