@@ -32,9 +32,9 @@ style:
   # 全局字体
   # 格式：字体1:起始码位:结束码位:字重:字形,字体2……，字体会依次 fallback
   # 详细设定请参考 <https://github.com/rime/weasel/wiki/字體設定>
-  font_face: "TX-02, 汉仪花冠, 霞鹜文楷等宽 GB 屏幕阅读版" # 全局字体
-  label_font_face: "TX-02, 汉仪花冠, 霞鹜文楷等宽 GB 屏幕阅读版" # 标签字体
-  comment_font_face: "TX-02, 汉仪花冠, 霞鹜文楷等宽 GB 屏幕阅读版" # 注释字体
+  font_face: "TX-02, TXHuaGuan" # 全局字体
+  label_font_face: "TX-02, TXHuaGuan" # 标签字体
+  comment_font_face: "TX-02, TXHuaGuan" # 注释字体
   font_point: 16 # 全局字体字号
   label_font_point: 14 # 标签字体字号，不设定 fallback 到 font_point
   comment_font_point: 12 # 注释字体字号，不设定 fallback 到 font_point
