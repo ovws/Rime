@@ -8,5 +8,4 @@ patch:
   schema_list:
     - {schema: tigress}
     - {schema: moran}
-    - {schema: moran_sentence}
     - {schema: PY_c}
