@@ -1,5 +1,5 @@
 schema: moran
-source_dir: ..
+source_dir: ../dist
 script: |
   function eq(left, right)
     print('Left  = ' .. tostring(left))
@@ -20,6 +20,8 @@ deploy:
         assert: cand[1].text == "啊" and eq(cand[1].comment, "📌 ¦ 💥a")
       - send: yyteer
         assert: cand[1].text == "英特爾" and eq(cand[1].comment, "💥yte")
+      - send: sjxneryi
+        assert: cand[1].text == '三心二意' and eq(cand[1].comment, "💥sxey")
   # 只有簡快碼提示，關閉簡快碼提示符的情形
   qchint-indicator:
     patch:
@@ -32,6 +34,8 @@ deploy:
         assert: cand[1].text == "啊" and eq(cand[1].comment, "📌 ¦ a")
       - send: yyteer
         assert: cand[1].text == "英特爾" and eq(cand[1].comment, "yte")
+      - send: sjxneryi
+        assert: cand[1].text == "三心二意" and eq(cand[1].comment, "sxey")
 
   # 只有輔助碼提示
   auxhint:
@@ -45,6 +49,8 @@ deploy:
         assert: cand[1].text == "啊" and eq(cand[1].comment, "📌 ¦ ka")
       - send: yyteer
         assert: cand[1].text == "英特爾" and eq(cand[1].comment, "")
+      - send: sjxneryi
+        assert: cand[1].text == "三心二意" and eq(cand[1].comment, "")
   # 只有輔助碼提示，關閉簡快碼提示符的情形
   auxhint-indicator:
     patch:
@@ -57,6 +63,8 @@ deploy:
         assert: cand[1].text == "啊" and eq(cand[1].comment, "📌 ¦ ka")
       - send: yyteer
         assert: cand[1].text == "英特爾" and eq(cand[1].comment, "")
+      - send: sjxneryi
+        assert: cand[1].text == "三心二意" and eq(cand[1].comment, "")
   # 只有輔助碼提示，開啓詞輔的情形
   auxhint+wordfilter:
     patch:
@@ -85,7 +93,7 @@ deploy:
       - send: k
         assert: cand[1].text == "可" and eq(cand[1].comment, "dk💥")
       - send: rugo
-        assert: cand[1].text == "如果" and eq(cand[1].comment, "na ¦ 💥rg")
+        assert: cand[1].text == "如果" and eq(cand[1].comment, "nt ¦ 💥rg")
       - send: lmjx
         assert: cand[1].text == "鏈接" and eq(cand[1].comment, "jf ¦ 💥lj")
       - send: lmjxf
@@ -101,13 +109,13 @@ deploy:
       moran/enable_word_filter: true
     tests:
       - send: a
-        assert: cand[1].text == "啊" and eq(cand[1].comment, "ka⚡aa")
+        assert: cand[1].text == "啊" and eq(cand[1].comment, "ka ¦ aa")
       - send: aa{Control+t}
-        assert: cand[1].text == "啊" and eq(cand[1].comment, "📌 ¦ ka⚡a")
+        assert: cand[1].text == "啊" and eq(cand[1].comment, "📌 ¦ ka ¦ a")
       - send: k
         assert: cand[1].text == "可" and eq(cand[1].comment, "dk")
       - send: rugo
-        assert: cand[1].text == "如果" and eq(cand[1].comment, "na ¦ rg")
+        assert: cand[1].text == "如果" and eq(cand[1].comment, "nt ¦ rg")
       - send: rg
         assert: cand[1].text == "如果" and eq(cand[1].comment, "")
       - send: lmjx
