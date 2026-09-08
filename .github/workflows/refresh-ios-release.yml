@@ -1,0 +1,31 @@
+name: One-time iOS release refresh
+
+on:
+  push:
+    paths:
+      - ".github/workflows/refresh-ios-release.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Repackage corrected iOS bundle
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/refresh-ios-release.yml
+          git commit -m "chore(ios): remove one-time release refresh workflow"
+          git push
+          asset="Rime-iOS-Hamster-Hamster3-2026.09.08.zip"
+          git archive --format=zip --output="$asset" HEAD
+          gh release upload "ios-2026.09.08" "$asset" --clobber
+          gh release edit "ios-2026.09.08" --notes "基于 ios 分支构建。默认简体中文；仓输入法显示候选注释；魔然、虎码、拼音++ 的拼音提示与拆分提示默认开启；含元书同步规则。"
