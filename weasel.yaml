@@ -32,11 +32,11 @@ style:
   # 全局字体
   # 格式：字体1:起始码位:结束码位:字重:字形,字体2……，字体会依次 fallback
   # 详细设定请参考 <https://github.com/rime/weasel/wiki/字體設定>
-  font_face: "TX-02, TXHuaGuan" # 全局字体
-  label_font_face: "TX-02, TXHuaGuan" # 标签字体
-  comment_font_face: "TX-02, TXHuaGuan" # 注释字体
-  font_point: 16 # 全局字体字号
-  label_font_point: 14 # 标签字体字号，不设定 fallback 到 font_point
+  font_face: "TX-02, PingFang UI SC" # 全局字体 霞鹜文楷：LXGW WenKai GB Screen
+  label_font_face: "TX-02, PingFang UI SC" # 标签字体 # 腾讯花冠：TXHuaGuan, LXGW WenKai GB Screen
+  comment_font_face: "TX-02, PingFang UI SC" # 注释字体
+  font_point: 14 # 全局字体字号
+  label_font_point: 13 # 标签字体字号，不设定 fallback 到 font_point
   comment_font_point: 12 # 注释字体字号，不设定 fallback 到 font_point
 
   inline_preedit: true # 行内显示预编辑区：true；false
@@ -46,7 +46,7 @@ style:
   vertical_text: false # 竖排文本：true；false
   text_orientation: horizontal # 文本排列方向，效果和 `vertical_text` 相同：horizontal；vertical
   candidate_list_layout: stacked # stacked | linear  候选项排列方向（似乎只有在custom内才可以生效）
-  horizontal: false # 候选项水平排列（在custom内和andidate_list_layout的linear效果一样）
+  horizontal: true # 候选项水平排列（在custom内和andidate_list_layout的linear效果一样）
   vertical_text_left_to_right: false # 竖排方向是否从左到右：true；false
   vertical_text_with_wrap: false # 文本竖排模式下，自动换行：true；false
   vertical_auto_reverse: false # 文本竖排模式下，候选窗口位于光标上方时倒序排列：true；false
@@ -72,9 +72,9 @@ style:
     margin_x: 0 # 主体元素和候选框的左右边距；为负值时，不显示候选框
     margin_y: 0 # 主体元素的上下边距；为负值时，不显示候选框
     spacing: 10 # inline_preedit 为否时，编码区域和候选区域的间距
-    candidate_spacing: 22 # 候选项之间的间距
+    candidate_spacing: 10 # 候选项之间的间距
     hilite_spacing: 6 # 候选项和相应标签的间距
-    hilite_padding: 8 # 高亮区域和内部文字的间距，影响高亮区域大小
+    hilite_padding: 4 # 高亮区域和内部文字的间距，影响高亮区域大小
     # hilite_padding_x: 8                  # 高亮区域和内部文字的左右间距，如无特殊指定则依 hilite_padding 设置
     # hilite_padding_y: 8                  # 高亮区域和内部文字的上下间距，如无特殊指定则依 hilite_padding 设置
     shadow_radius: 0 # 阴影区域半径，为 0 不显示阴影；需要同时在配色方案中指定非透明的阴影颜色
