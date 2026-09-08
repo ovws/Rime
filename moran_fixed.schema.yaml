@@ -21,8 +21,10 @@ switches:
     states: [ 通, 简, 台, 港, 日, 寍 ]
     # 關於該項, 參見 moran.schema.yaml 中說明
   - name: chaifen
+    reset: 1
     states: [ 不拆, 扌斥 ]
   - name: pinyinhint
+    reset: 1
     states: [ 🔇, 🔊 ]
   - name: unicode_comment
     states: [ U關, U開 ]
