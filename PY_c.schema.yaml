@@ -106,6 +106,7 @@ engine:
     - simplifier@simplification  #简繁滤镜
     # - simplifier@fanjian  #繁简滤镜
     - simplifier@pinyin  #拼音滤镜
+    - simplifier@chaifen  #拆分滤镜
     - simplifier@emoji_cn  #表情滤镜
     - lua_filter@charset_comment_filter #Unicode分区提示滤镜
     - lua_filter@lua_unicode_display_filter #Unicode编码显示
@@ -273,6 +274,20 @@ pinyin:
     - reverse_lookup
 
 
+
+
+# ↓拆分滤镜
+chaifen:
+  opencc_config: hu_cf.json
+  option_name: chaifen
+  show_in_comment: true
+  comment_format:
+    - 'xform/&nbsp;/ /'
+    - "xform/^/ /"
+  tips: all
+  tags:
+    - abc
+    - reverse_lookup
 
 # ↓emoji表情滤镜
 emoji_cn:
