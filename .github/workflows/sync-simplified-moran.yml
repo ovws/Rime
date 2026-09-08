@@ -1,0 +1,30 @@
+name: One-time upstream Simplified Moran sync
+
+on:
+  push:
+    paths:
+      - ".github/workflows/sync-simplified-moran.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Overlay official Simplified Moran build
+        shell: bash
+        run: |
+          git remote add moran-upstream https://github.com/rimeinn/rime-moran.git
+          git fetch moran-upstream simp --depth=1
+          git checkout moran-upstream/simp -- .
+          git checkout HEAD -- squirrel.yaml moran_custom_phrases.txt
+          git rm --ignore-unmatch .github/workflows/sync-simplified-moran.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(moran): sync official Simplified Chinese build"
+          git push
