@@ -22,7 +22,7 @@ jobs:
           git fetch moran-upstream main --depth=1
           git checkout moran-upstream/main -- .
           git checkout HEAD -- squirrel.yaml weasel.yaml weasel.custom.yaml default.custom.yaml PY_c.custom.yaml tiger.custom.yaml tigress.custom.yaml moran_custom_phrases.txt user.yaml
-          git rm --ignore-unmatch .github/workflows/full-upstream-sync.yml
+          git rm --ignore-unmatch .github/workflows/main.yml .github/workflows/full-upstream-sync.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
