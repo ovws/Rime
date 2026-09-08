@@ -1,7 +1,7 @@
 # Rime default settings
 # encoding: utf-8
 
-config_version: "0.40"
+config_version: '1.0.moran'
 
 schema_list:
   - schema: moran
@@ -36,9 +36,19 @@ switcher:
     - emoji
     - inflexible
     - unicode_comment
+    - std_t
+    - std_t2s
+    - std_t2hk
+    - std_t2tw
+    - std_t2dzing
+    - std_s
+    - std_s2t
+    - std_s2hk
+    - std_s2tw
+    - std_s2dzing
   fold_options: true
   abbreviate_options: true
-  option_list_separator: "／"
+  option_list_separator: '／'
 
 menu:
   page_size: 5
@@ -60,7 +70,7 @@ key_binder:
 
 recognizer:
   patterns:
-    email: "^[A-Za-z][-_.0-9A-Za-z]*@.*$"
+    email: "^([A-Za-z][-_.0-9A-Za-z]*|)@.*$"
     uppercase: "[A-Z][-_+.'0-9A-Za-z]*$"
     url: "^(www[.]|https?:|ftp[.:]|mailto:|file:).*$|^[a-z]+[.].+$"
 

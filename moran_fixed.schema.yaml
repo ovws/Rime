@@ -1,7 +1,7 @@
 schema:
   schema_id: moran_fixed
-  name: 魔然·字詞
-  version: "20241011"
+  name: 字詞·魔然
+  version: "20260605"
   author:
     - 自然碼發明人：周志農
     - 方案製作：ksqsf
@@ -13,21 +13,19 @@ switches:
     states: [ 中文, 西文 ]
   - name: full_shape
     states: [ 半角, 全角 ]
-  - name: traditionalization
-    states: [ 汉字, 漢字 ]
   - name: ascii_punct
     states: [ 。，, ．， ]
   - name: emoji
-    reset: 1
     states: [ 🈚, 🈶 ]
+  - options: [ std_t, std_t2s, std_t2tw, std_t2hk, std_t2jp, std_t2dzing ]
+    states: [ 通, 简, 台, 港, 日, 寍 ]
+    # 關於該項, 參見 moran.schema.yaml 中說明
   - name: chaifen
-    reset: 1
     states: [ 不拆, 扌斥 ]
+  - name: pinyinhint
+    states: [ 🔇, 🔊 ]
   - name: unicode_comment
     states: [ U關, U開 ]
-  - options: [ std_opencc,  std_tw, std_hk, std_dzing ]
-    reset: 0
-    states: [ 通, 臺, 港, 寍 ]
 
 engine:
   processors:
@@ -60,13 +58,15 @@ engine:
     - history_translator@quick_repeat
   filters:
     - lua_filter@*moran_pin*pin_filter
-    - simplifier@chaifen
-    - simplifier@std_hk
-    - simplifier@std_tw
-    - simplifier@std_dzing
-    - simplifier
-    #- lua_filter@*moran_hint_filter  # 簡碼提示功能，詳見文件末
     - simplifier@emoji
+    - simplifier@std_t2s
+    - simplifier@std_t2tw
+    - simplifier@std_t2hk
+    - simplifier@std_t2jp
+    - simplifier@std_t2dzing
+    - simplifier@chaifen
+    - simplifier@pinyinhint
+    #- lua_filter@*moran_hint_filter  # 簡碼提示功能，詳見文件末
     - uniquifier
 
 speller:
@@ -82,7 +82,7 @@ speller:
       - moran:/algebra/user_force_bottom?
 
 translator:
-  dictionary: moran_fixed_simp
+  dictionary: moran_fixed
   db_class: tabledb
   enable_charset_filter: false
   enable_sentence: false
@@ -91,7 +91,7 @@ translator:
   initial_quality: 100000
 
 fixed:
-  dictionary: moran_fixed_simp
+  dictionary: moran_fixed
   db_class: tabledb
   enable_charset_filter: false
   enable_sentence: false
@@ -112,7 +112,7 @@ custom_phrase: # 自定義短語
 zkci:           # 造詞
   tag: zkci
   db_class: tabledb
-  dictionary: moran_fixed_simp
+  dictionary: moran_fixed
   enable_user_dict: false
   enable_charset_filter: false
   enable_completion: false
@@ -133,23 +133,37 @@ quick_repeat:  # 快速重複上屏
   size: 1
   initial_quality: 0
 
-simplifier:
-  option_name: traditionalization
-  opencc_config: s2t.json
+pinyinhint:
+  option_name: pinyinhint
+  opencc_config: moran_pinyinhint.json
+  tips: char
+  show_in_comment: true
+  comment_format:
+    __include: :/chaifen/comment_format
 
-std_hk:
+std_t2s:
+  option_name: std_t2s
+  opencc_config: moran_t2s.json
+
+std_t2hk:
   opencc_config: t2hk.json
-  option_name: std_hk
+  option_name: std_t2hk
   #tips: all
 
-std_tw:
+std_t2tw:
   opencc_config: t2tw.json
-  option_name: std_tw
+  option_name: std_t2tw
   #tips: all
 
-std_dzing:
-  opencc_config: moran_dzing.json
-  option_name: std_dzing
+std_t2jp:
+  opencc_config: t2jp.json
+  option_name: std_t2jp
+  tips: all
+  tags: [abc, number]
+
+std_t2dzing:
+  opencc_config: moran_t2dzing.json
+  option_name: std_t2dzing
   tips: all
 
 emoji:
@@ -207,6 +221,7 @@ key_binder:
       - :/key_binder/custom_bindings?
       - moran:/key_bindings/moran_switches
       - moran:/key_bindings/moran_semicolon_for_2
+      - moran:/key_bindings/moran_ctrl_s
       - moran:/key_bindings/moran_keypad
 
 # 默認不開啓語言模型

@@ -1,14 +1,13 @@
 schema:
   schema_id: moran_sentence
-  name: 魔然·整句
-  version: "20250418"
+  name: 整句·魔然
+  version: "20260605"
   author:
     - 自然碼發明人：周志農
     - 方案製作：ksqsf
   description: |
-    無簡快碼的輸入純粹整句輸入模式。
+    無簡快碼的純粹整句輸入方案。
   dependencies:
-    - tiger
     - moran_charset
     - moran_english
     #- moran_japanese
@@ -23,22 +22,21 @@ switches:
     states: [ 中文, 西文 ]
   - name: full_shape
     states: [ 半角, 全角 ]
-  - name: traditionalization
-    states: [ 汉字, 漢字 ]
   - name: ascii_punct
     states: [ 。，, ．， ]
+  - name: emoji
+    states: [ 🈚, 🈶 ]
+  - options: [ std_t, std_t2s, std_t2tw, std_t2hk, std_t2jp, std_t2dzing ]
+    states: [ 通, 简, 台, 港, 日, 寍 ]
+    # 關於該項, 參見 moran.schema.yaml 中說明
   - name: extended_charset
     states: [ 通用, 增廣 ]
-  - name: emoji
-    reset: 1
-    states: [ 🈚, 🈶 ]
   - name: chaifen
-    reset: 1
     states: [ 不拆, 扌斥 ]
+  - name: pinyinhint
+    states: [ 🔇, 🔊 ]
   - name: unicode_comment
     states: [ U開, U關 ]
-  - options: [ std_opencc,  std_tw, std_hk, std_dzing ]
-    states: [ 通, 臺, 港, 寍 ]
 
 engine:
   processors:
@@ -70,16 +68,28 @@ engine:
     #- table_translator@english             # 英語混輸
     #- table_translator@japanese            # 日語混輸
     - script_translator
+    - lua_translator@*moran_shijian        # 日期orq 節氣ojq 星期oxq 時間osj
+    - lua_translator@*moran_number         # 數字轉大寫, 大寫S引導, 如 S123
+    - lua_translator@*moran_unicode        # Unicode輸入, 大寫U引導, 如 U9b54
   filters:
     #- lua_filter@*moran_hint_filter           # 輔助碼提示需要去掉本行開頭的 # 符號
     - lua_filter@*moran_charset_filter     # 字集過濾需要去掉本行開頭的 # 符號
-    - simplifier@chaifen
     - simplifier@emoji
-    - simplifier
-    - simplifier@std_tw
-    - simplifier@std_hk
-    - simplifier@std_dzing
+    - simplifier@std_t2s
+    - simplifier@std_t2tw
+    - simplifier@std_t2hk
+    - simplifier@std_t2jp
+    - simplifier@std_t2dzing
+    - simplifier@chaifen
+    - simplifier@pinyinhint
+    - lua_filter@*moran_charset_comment_filter  # Unicode 區位提示
+    - lua_filter@*moran_unicode_display_filter  # Unicode 編碼提示
+    - lua_filter@*moran_english_filter
     - uniquifier
+
+navigator:
+  # 在音節跳轉時，跳過音節末尾的分隔符 ' ，設爲 after_delimiter 恢復 Rime 默認行爲
+  syllable_jump_position: before_delimiter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/
@@ -94,10 +104,12 @@ speller:
 
 translator:
   dictionary: moran.extended
-  prism: moran_sentence
+  prism: moran
   initial_quality: 5
   preedit_format:
     - xform/([a-z][a-z][a-z][a-z])o/$1°/
+  core_word_length: 4
+  max_word_length: 10
 
 custom_phrase: # 自定義短語
   dictionary: ""
@@ -130,10 +142,6 @@ japanese:
   comment_format:
     - xform/.*//
 
-simplifier:
-  option_name: traditionalization
-  opencc_config: s2t.json
-
 chaifen:
   option_name: chaifen
   opencc_config: moran_chaifen.json
@@ -148,17 +156,35 @@ emoji:
   option_name: emoji
   tips: all
 
-std_hk:
+pinyinhint:
+  option_name: pinyinhint
+  opencc_config: moran_pinyinhint.json
+  tips: char
+  show_in_comment: true
+  comment_format:
+    __include: :/chaifen/comment_format
+
+std_t2s:
+  option_name: std_t2s
+  opencc_config: moran_t2s.json
+
+std_t2hk:
   opencc_config: t2hk.json
-  option_name: std_hk
+  option_name: std_t2hk
 
-std_tw:
+std_t2tw:
   opencc_config: t2tw.json
-  option_name: std_tw
+  option_name: std_t2tw
 
-std_dzing:
-  opencc_config: moran_dzing.json
-  option_name: std_dzing
+std_t2jp:
+  opencc_config: t2jp.json
+  option_name: std_t2jp
+  tips: all
+  tags: [abc, number]
+
+std_t2dzing:
+  opencc_config: moran_t2dzing.json
+  option_name: std_t2dzing
   tips: all
 
 reverse_format:
@@ -217,21 +243,12 @@ reverse_bopomofo:
   preedit_format:
     - xform/^o(lf|bh|cj|vy)//
     - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
+  __include: reverse_format
 
 reverse_tick:
-  __include: reverse_tiger
+  __include: reverse_zrlf
   tag: reverse_tick
   prefix: "`"
-
-reverse_lookup:
-  extra_tags:
-    - reverse_tick
-    - reverse_universal
-    - reverse_tiger
-    - reverse_stroke
-    - reverse_cangjie5
-    - reverse_zrlf
-    - reverse_bopomofo
 
 punctuator:
   import_preset: symbols
@@ -246,6 +263,7 @@ key_binder:
       - :/key_binder/custom_bindings?
       - moran:/key_bindings/moran_tab
       - moran:/key_bindings/moran_semicolon_for_2
+      - moran:/key_bindings/moran_ctrl_s
       - moran:/key_bindings/moran_switches
       - moran:/key_bindings/moran_keypad
       # 大寫字母追加輔助碼到上一音節
@@ -255,9 +273,14 @@ key_binder:
 recognizer:
   import_preset: default
   patterns:
+    unicode: "^U[a-fA-F0-9]+"
+    number: "^S[0-9]+"
+    shijian: "^N[0-9]+"
+    uppercase: "[A-Z][-_+.'A-Za-z]*$"
     punct: '^/([0-9]0?|[A-Za-z]+)$'
     reverse_universal: "(^(`[a-z`]+))|(^([a-z]{2}(`[a-z`]?|[a-z`]`))|^([a-z]{4}`))"
-    reverse_tiger: "(^`$)|(^`[a-zA-Z]+$)"
+    reverse_tick: "(^`$)|(^`[a-zA-Z]+$)"
+    reverse_tiger: "^ohm[a-z]+$"
     reverse_stroke: "^obh[A-Za-z]*$"
     reverse_cangjie5: "^ocj[A-Za-z]*$"
     reverse_zrlf: "^olf[A-Za-z]*$"

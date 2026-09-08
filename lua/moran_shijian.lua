@@ -780,8 +780,8 @@ end
 
 -- ==================节气计算===================
 local jqB = { -- 节气表
-"春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露",
-"秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒", "立春", "雨水", "惊蛰"}
+"春分", "清明", "穀雨", "立夏", "小滿", "芒種", "夏至", "小暑", "大暑", "立秋", "處暑", "白露",
+"秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒", "立春", "雨水", "驚蟄"}
 
 function JQtest(y) -- 节气使计算范例,y是年分,这是个测试函数
   local i, q, s1, s2
@@ -1165,8 +1165,8 @@ end
 -- ====================以下是测试代码=============
 
 local jqB = { -- 节气表
-"立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑",
-"立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒"}
+"立春", "雨水", "驚蟄", "春分", "清明", "穀雨", "立夏", "小滿", "芒種", "夏至", "小暑", "大暑",
+"立秋", "處暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒"}
 -- 天干
 local tiangan = {'甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'}
 
@@ -1203,7 +1203,7 @@ function lunarJzl(y)
   didx = x:getDayGanZhi()
   hidx = x:getHourGanZhi()
   GzData = get60JiaZiStr(yidx) .. '年' .. get60JiaZiStr(midx) .. '月' .. get60JiaZiStr(didx) .. '日' ..
-             get60JiaZiStr(hidx) .. '时'
+             get60JiaZiStr(hidx) .. '時'
   -- print('干支:'  .. GzData)
   return GzData
 end
@@ -1216,13 +1216,33 @@ end
 
 local function chinese_weekday(wday)
   wday_num = tonumber(wday) + 1
-  chinese_weekdays = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"}
+  chinese_weekdays = {"週日", "週一", "週二", "週三", "週四", "週五", "週六"}
   return chinese_weekdays[wday_num]
 end
 local function chinese_weekday2(wday)
   wday_num = tonumber(wday) + 1
   chinese_weekdays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"}
   return chinese_weekdays[wday_num]
+end
+
+local function iso_week_number(time)
+  local date = os.date("*t", time or os.time())
+  date.hour, date.min, date.sec = 12, 0, 0
+
+  local day_time = os.time(date)
+  local weekday = tonumber(os.date("%w", day_time))
+  if weekday == 0 then weekday = 7 end
+
+  local thursday_time = os.time({
+    year = date.year,
+    month = date.month,
+    day = date.day + 4 - weekday,
+    hour = 12,
+    min = 0,
+    sec = 0,
+  })
+  local thursday_yday = tonumber(os.date("%j", thursday_time))
+  return tostring(math.floor((thursday_yday - 1) / 7) + 1)
 end
 
 local function time_to_num(time)
@@ -1243,9 +1263,9 @@ end
 
 local GetLunarSichen = function(time, t)
   local time = tonumber(time)
-  local LunarSichen = {"子时(夜半｜三更)", "丑时(鸡鸣｜四更)", "寅时(平旦｜五更)",
-                       "卯时(日出)", "辰时(食时)", "巳时(隅中)", "午时(日中)", "未时(日昳)",
-                       "申时(晡时)", "酉时(日入)", "戌时(黄昏｜一更)", "亥时(人定｜二更)"}
+  local LunarSichen = {"子時(夜半｜三更)", "丑時(雞鳴｜四更)", "寅時(平旦｜五更)",
+                       "卯時(日出)", "辰時(食時)", "巳時(隅中)", "午時(日中)", "未時(日昳)",
+                       "申時(晡時)", "酉時(日入)", "戌時(黄昏｜一更)", "亥時(人定｜二更)"}
   if tonumber(t) == 1 then
     sj = math.floor((time + 1) / 2) + 1
   elseif tonumber(t) == 0 then
@@ -1414,14 +1434,14 @@ function Date2LunarDate(Gregorian)
   -- 地支名称
   local cDiZhi = {"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"}
   -- 属相名称
-  local cShuXiang = {"鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"}
+  local cShuXiang = {"鼠", "牛", "虎", "兔", "龍", "蛇", "馬", "羊", "猴", "雞", "狗", "豬"}
   -- 农历日期名
   local cDayName = {"初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
                     "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
                     "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"}
   -- 农历月份名
   local cMonName = {"正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月",
-                    "冬月", "腊月"}
+                    "冬月", "臘月"}
 
   -- 农历数据
   local wNongliData = {"AB500D2", "4BD0883", "4AE00DB", "A5700D0", "54D0581", "D2600D8", "D9500CC", "655147D",
@@ -1439,16 +1459,16 @@ function Date2LunarDate(Gregorian)
                        "6B50883", "5AC00DB", "AB600CF", "96D0580", "92E00D8", "C9600CD", "D95047C", "D4A00D4",
                        "DA500C9", "755027A", "56A00D1", "ABB0781", "25D00DA", "92D00CF", "CAB057E", "A9500D6",
                        "B4A00CB", "BAA047B", "AD500D2", "55D0983", "4BA00DB", "A5B00D0", "5171680", "52B00D8",
-                       "A9300CD", "795047D", "6AA00D4", "AD500C9", "5B5027A", "4B600D2", "96E0681", "A4E00D9",
-                       "D2600CE", "EA6057E", "D5300D5", "5AA00CB", "76A037B", "96D00D3", "4AB0B83", "4AD00DB",
+                       "A9300CD", "795047D", "6AA00D4", "AD500C9", "5B5027A", "4B600D2", "A6E0681", "A4E00D9",
+                       "D2600CE", "EA6057E", "D5300D5", "5AA00CB", "76A037B", "96D00D3", "4AF0B83", "4AD00DB",
                        "A4D00D0", "D0B1680", "D2500D7", "D5200CC", "DD4057C", "B5A00D4", "56D00C9", "55B027A",
                        "49B00D2", "A570782", "A4B00D9", "AA500CE", "B25157E", "6D200D6", "ADA00CA", "4B6137B",
-                       "93700D3", "49F08C9", "49700DB", "64B00D0", "68A1680", "EA500D7", "6AA00CC", "A6C147C",
-                       "AAE00D4", "92E00CA", "D2E0379", "C9600D1", "D550781", "D4A00D9", "DA400CD", "5D5057E",
-                       "56A00D6", "A6C00CB", "55D047B", "52D00D3", "A9B0883", "A9500DB", "B4A00CF", "B6A067F",
-                       "AD500D7", "55A00CD", "ABA047C", "A5A00D4", "52B00CA", "B27037A", "69300D1", "7330781",
-                       "6AA00D9", "AD500CE", "4B5157E", "4B600D6", "A5700CB", "54E047C", "D1600D2", "E960882",
-                       "D5200DA", "DAA00CF", "6AA167F", "56D00D7", "4AE00CD", "A9D047D", "A2D00D4", "D1500C9",
+                       "93700D3", "49F08C9", "49700DB", "64B00D0", "68A1680", "EA500D7", "6B200CC", "A6C147C",
+                       "AAE00D4", "92E00CA", "D2E0379", "C9600D1", "D550781", "D4A00D9", "DA500CD", "5D5057E",
+                       "56A00D6", "A6D00CB", "55D047B", "52D00D3", "A9B0883", "A9500DB", "B4A00CF", "B6A067F",
+                       "AD500D7", "55A00CD", "ABA047C", "A5B00D4", "52B00CA", "B27037A", "69300D1", "7330781",
+                       "6AA00D9", "AD500CE", "4B5157E", "4B600D6", "A5700CB", "54E047C", "D2600D2", "E960882",
+                       "D5200DA", "DAA00CF", "6AA167F", "56D00D7", "4AE00CD", "A9D047D", "A4D00D4", "D1500C9",
                        "F250279", "D5200D1"}
   Gregorian = tostring(Gregorian)
   local Year, Month, Day, Pos, Data0, Data1, MonthInfo, LeapInfo, Leap, Newyear, Data2, Data3, LYear, thisMonthInfo
@@ -1523,7 +1543,7 @@ function Date2LunarDate(Gregorian)
   end
   -- print(LYear .. "-" .. LMonth .. "-" .. LDay)
   if Isleap > 0 then
-    LunarMonth = "闰" .. cMonName[LMonth]
+    LunarMonth = "閏" .. cMonName[LMonth]
   else
     LunarMonth = cMonName[LMonth]
   end
@@ -1606,15 +1626,15 @@ function LunarDate2Date(Gregorian, IsLeap)
                "96D0580", "92E00D8", "C9600CD", "D95047C", "D4A00D4", "DA500C9", "755027A", "56A00D1", "ABB0781",
                "25D00DA", "92D00CF", "CAB057E", "A9500D6", "B4A00CB", "BAA047B", "AD500D2", "55D0983", "4BA00DB",
                "A5B00D0", "5171680", "52B00D8", "A9300CD", "795047D", "6AA00D4", "AD500C9", "5B5027A", "4B600D2",
-               "96E0681", "A4E00D9", "D2600CE", "EA6057E", "D5300D5", "5AA00CB", "76A037B", "96D00D3", "4AB0B83",
+               "A6E0681", "A4E00D9", "D2600CE", "EA6057E", "D5300D5", "5AA00CB", "76A037B", "96D00D3", "4AF0B83",
                "4AD00DB", "A4D00D0", "D0B1680", "D2500D7", "D5200CC", "DD4057C", "B5A00D4", "56D00C9", "55B027A",
                "49B00D2", "A570782", "A4B00D9", "AA500CE", "B25157E", "6D200D6", "ADA00CA", "4B6137B", "93700D3",
-               "49F08C9", "49700DB", "64B00D0", "68A1680", "EA500D7", "6AA00CC", "A6C147C", "AAE00D4", "92E00CA",
-               "D2E0379", "C9600D1", "D550781", "D4A00D9", "DA400CD", "5D5057E", "56A00D6", "A6C00CB", "55D047B",
-               "52D00D3", "A9B0883", "A9500DB", "B4A00CF", "B6A067F", "AD500D7", "55A00CD", "ABA047C", "A5A00D4",
+               "49F08C9", "49700DB", "64B00D0", "68A1680", "EA500D7", "6B200CC", "A6C147C", "AAE00D4", "92E00CA",
+               "D2E0379", "C9600D1", "D550781", "D4A00D9", "DA500CD", "5D5057E", "56A00D6", "A6D00CB", "55D047B",
+               "52D00D3", "A9B0883", "A9500DB", "B4A00CF", "B6A067F", "AD500D7", "55A00CD", "ABA047C", "A5B00D4",
                "52B00CA", "B27037A", "69300D1", "7330781", "6AA00D9", "AD500CE", "4B5157E", "4B600D6", "A5700CB",
-               "54E047C", "D1600D2", "E960882", "D5200DA", "DAA00CF", "6AA167F", "56D00D7", "4AE00CD", "A9D047D",
-               "A2D00D4", "D1500C9", "F250279", "D5200D1"}
+               "54E047C", "D2600D2", "E960882", "D5200DA", "DAA00CF", "6AA167F", "56D00D7", "4AE00CD", "A9D047D",
+               "A4D00D4", "D1500C9", "F250279", "D5200D1"}
   Gregorian = tostring(Gregorian)
   local Year, Month, Day, Pos, Data, MonthInfo, LeapInfo, Leap, Newyear, Sum, thisMonthInfo, GDate
   Year = tonumber(Gregorian.sub(Gregorian, 1, 4))
@@ -1781,10 +1801,10 @@ local function QueryLunarInfo(date)
     DateTime = LunarDate2Date(str, 0)
     dateRQ = string.sub(str, 1, 4) .. "年" .. string.sub(str, 5, 6) .. "月" .. string.sub(str, 7, 8) .. "日"
     if LunarGz ~= nil then
-      result = {{dateRQ, "〔公历〕"}, {LunarDate, "〔公历⇉农历〕"}, {LunarGz, "〔公历⇉干支〕"}}
+      result = {{dateRQ, "〔公曆〕"}, {LunarDate, "〔公曆⇉農曆〕"}, {LunarGz, "〔公曆⇉干支〕"}}
       if tonumber(string.sub(str, 7, 8)) < 31 then
-        table.insert(result, {DateTime, "〔农历⇉公历〕"})
-        local leapDate = {LunarDate2Date(str, 1) .. "（闰）", "〔农历⇉公历〕"}
+        table.insert(result, {DateTime, "〔農曆⇉公曆〕"})
+        local leapDate = {LunarDate2Date(str, 1) .. "（閏）", "〔農曆⇉公曆〕"}
         if string.match(leapDate[1], "^(%d+)") ~= nil then
           table.insert(result, leapDate)
         end
@@ -1850,6 +1870,7 @@ local function translator(input, seg)
     yield(candidate)
 
     date = os.date("%Y年%m月%d日")
+    date = string.gsub(date, "(%D)0", "%1")
     candidate = Candidate("date", seg.start, seg._end, date, num_year)
     yield(candidate)
 
@@ -1910,7 +1931,7 @@ local function translator(input, seg)
     -- 星期几 周几
   elseif (input == "oweek" or input == "oxq") then
     weekday = chinese_weekday(os.date("%w"))
-    num_weekday = os.date("第%W周")
+    num_weekday = "第" .. iso_week_number() .. "週"
     candidate = Candidate("xq", seg.start, seg._end, weekday, num_weekday)
     yield(candidate)
 
@@ -1926,10 +1947,10 @@ local function translator(input, seg)
     candidate = Candidate("xq", seg.start, seg._end, weekday, num_weekday)
     yield(candidate)
   elseif (input == "oww" or input == "ovu") then
-     weekno = tostring(tonumber(os.date("%W")) + 1)
-     candidate = Candidate("oww", seg.start, seg._end, "W" .. weekno, "周")
+     weekno = iso_week_number()
+     candidate = Candidate("oww", seg.start, seg._end, "W" .. weekno, "週")
      yield(candidate)
-     candidate = Candidate("oww", seg.start, seg._end, "第" .. weekno .. "周", "周")
+     candidate = Candidate("oww", seg.start, seg._end, "第" .. weekno .. "週", "週")
      yield(candidate)
     -- 节气 已修复崩溃问题
   elseif (input == "ojq") then
@@ -1951,13 +1972,13 @@ local function translator(input, seg)
         end
       end
     end -- if tonumber
-    -- ISO 8601 / RFC 3339 的时间格式 （固定东八区）
+    -- ISO 8601 / RFC 3339 的時間格式 （固定東八區）
   elseif (input == "ors") then
     local current_time = os.time()
-    yield(Candidate(input, seg.start, seg._end, os.date('%Y-%m-%d %H:%M:%S', current_time), "年-月-日 时:分:秒"))
-    yield(Candidate(input, seg.start, seg._end, os.date('%Y-%m-%dT%H:%M:%S+08:00', current_time), "年-月-日T时:分:秒+时区"))
-    yield(Candidate(input, seg.start, seg._end, os.date('%Y%m%d%H%M%S', current_time), "年月日时分秒"))
-    -- Unix Epoch Clock / Timestamp 时间格式
+    yield(Candidate(input, seg.start, seg._end, os.date('%Y-%m-%d %H:%M:%S', current_time), "年-月-日 時:分:秒"))
+    yield(Candidate(input, seg.start, seg._end, os.date('%Y-%m-%dT%H:%M:%S+08:00', current_time), "年-月-日T時:分:秒+時區"))
+    yield(Candidate(input, seg.start, seg._end, os.date('%Y%m%d%H%M%S', current_time), "年月日時分秒"))
+    -- Unix Epoch Clock / Timestamp 時間格式
   elseif (input == "oepoch") then
     local current_time = os.time()
     yield(Candidate(input, seg.start, seg._end, string.format('%d', current_time), "Unix Timestamp"))
