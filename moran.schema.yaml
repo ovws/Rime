@@ -29,9 +29,9 @@ switches:
     states: [ 。，, ．， ]
   - name: emoji
     states: [ 🈚, 🈶 ]
-  - options: [ std_t, std_t2s, std_t2tw, std_t2hk, std_t2jp, std_t2dzing ]
-    states: [ 通, 简, 台, 港, 日, 寍 ]
-    reset: 1  # 默认「简」（std_t2s）
+  - options: [ std_t2s, std_t ]
+    states: [ 简, 繁 ]
+    reset: 0  # 默认简体；仅手动切换才显示繁体
     # 快捷鍵 Ctrl-S 會在前兩個字集之間切換, 由 moran_processor.lua 實現.
     # 若經常切換簡繁且偏好特定繁體標準, 可自行修改字集列表順序, 例如
     # patch:
