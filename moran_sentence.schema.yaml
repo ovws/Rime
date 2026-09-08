@@ -26,8 +26,8 @@ switches:
     states: [ 。，, ．， ]
   - name: emoji
     states: [ 🈚, 🈶 ]
-  - options: [ std_t, std_t2s, std_t2tw, std_t2hk, std_t2jp, std_t2dzing ]
-    states: [ 通, 简, 台, 港, 日, 寍 ]
+  - options: [ std_s, std_s2t, std_s2tw, std_s2hk, std_s2jp, std_s2dzing ]
+    states: [ 简, 繁, 台, 港, 日, 寍 ]
     # 關於該項, 參見 moran.schema.yaml 中說明
   - name: extended_charset
     states: [ 通用, 增廣 ]
@@ -75,11 +75,11 @@ engine:
     #- lua_filter@*moran_hint_filter           # 輔助碼提示需要去掉本行開頭的 # 符號
     - lua_filter@*moran_charset_filter     # 字集過濾需要去掉本行開頭的 # 符號
     - simplifier@emoji
-    - simplifier@std_t2s
-    - simplifier@std_t2tw
-    - simplifier@std_t2hk
-    - simplifier@std_t2jp
-    - simplifier@std_t2dzing
+    - simplifier@std_s2t
+    - simplifier@std_s2tw
+    - simplifier@std_s2hk
+    - simplifier@std_s2jp
+    - simplifier@std_s2dzing
     - simplifier@chaifen
     - simplifier@pinyinhint
     - lua_filter@*moran_charset_comment_filter  # Unicode 區位提示
@@ -164,27 +164,27 @@ pinyinhint:
   comment_format:
     __include: :/chaifen/comment_format
 
-std_t2s:
-  option_name: std_t2s
-  opencc_config: moran_t2s.json
+std_s2t:
+  option_name: std_s2t
+  opencc_config: s2t.json
 
-std_t2hk:
-  opencc_config: t2hk.json
-  option_name: std_t2hk
+std_s2hk:
+  opencc_config: s2hk.json
+  option_name: std_s2hk
 
-std_t2tw:
-  opencc_config: t2tw.json
-  option_name: std_t2tw
+std_s2tw:
+  opencc_config: s2tw.json
+  option_name: std_s2tw
 
-std_t2jp:
-  opencc_config: t2jp.json
-  option_name: std_t2jp
+std_s2jp:
+  opencc_config: s2jp.json
+  option_name: std_s2jp
   tips: all
   tags: [abc, number]
 
-std_t2dzing:
-  opencc_config: moran_t2dzing.json
-  option_name: std_t2dzing
+std_s2dzing:
+  opencc_config: moran_s2dzing.json
+  option_name: std_s2dzing
   tips: all
 
 reverse_format:

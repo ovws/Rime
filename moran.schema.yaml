@@ -29,13 +29,13 @@ switches:
     states: [ 。，, ．， ]
   - name: emoji
     states: [ 🈚, 🈶 ]
-  - options: [ std_t, std_t2s, std_t2tw, std_t2hk, std_t2jp, std_t2dzing ]
-    states: [ 通, 简, 台, 港, 日, 寍 ]
+  - options: [ std_s, std_s2t, std_s2tw, std_s2hk, std_s2jp, std_s2dzing ]
+    states: [ 简, 繁, 台, 港, 日, 寍 ]
     # 快捷鍵 Ctrl-S 會在前兩個字集之間切換, 由 moran_processor.lua 實現.
     # 若經常切換簡繁且偏好特定繁體標準, 可自行修改字集列表順序, 例如
     # patch:
     #   switches/@4/+:
-    #     options: [ std_t2tw, std_t2hk  ]   # 用不到的其他字集也可以刪掉
+    #     options: [ std_s2tw, std_s2hk  ]   # 用不到的其他字集也可以刪掉
     #     states: [ 台, 港 ]                 # 與 options 匹配
     #     reset: 0                           # 設定默認值爲 *第一項* (從 0 開始計數)
   - name: extended_charset
@@ -99,11 +99,11 @@ engine:
     - lua_filter@*moran_ijrq_filter
     - lua_filter@*moran_hint_filter
     - simplifier@emoji
-    - simplifier@std_t2s
-    - simplifier@std_t2tw
-    - simplifier@std_t2hk
-    - simplifier@std_t2jp
-    - simplifier@std_t2dzing
+    - simplifier@std_s2t
+    - simplifier@std_s2tw
+    - simplifier@std_s2hk
+    - simplifier@std_s2jp
+    - simplifier@std_s2dzing
     - simplifier@chaifen
     - simplifier@pinyinhint
     - lua_filter@*moran_charset_comment_filter  # Unicode 區位提示
@@ -142,7 +142,7 @@ smart:         # 整句輸入模式設置，在 top_translator 中被調用
   max_sentences: 2
 
 fixed:         # 固頂輸入模式設置，在 top_translator 中被調用
-  dictionary: moran_fixed
+  dictionary: moran_fixed_simp
   initial_quality: 100
   enable_completion: false
   enable_sentence: false
@@ -218,32 +218,32 @@ emoji:
   tips: none
   tags: [has_emoji]
 
-std_t2s:
-  opencc_config: moran_t2s.json
-  option_name: std_t2s
+std_s2t:
+  opencc_config: s2t.json
+  option_name: std_s2t
   tags: [abc, number]
 
-std_t2hk:
-  opencc_config: t2hk.json
-  option_name: std_t2hk
+std_s2hk:
+  opencc_config: s2hk.json
+  option_name: std_s2hk
   #tips: all
   tags: [abc, number]
 
-std_t2tw:
-  opencc_config: t2tw.json
-  option_name: std_t2tw
+std_s2tw:
+  opencc_config: s2tw.json
+  option_name: std_s2tw
   #tips: all
   tags: [abc, number]
 
-std_t2jp:
-  opencc_config: t2jp.json
-  option_name: std_t2jp
+std_s2jp:
+  opencc_config: s2jp.json
+  option_name: std_s2jp
   tips: all
   tags: [abc, number]
 
-std_t2dzing:
-  opencc_config: moran_t2dzing.json
-  option_name: std_t2dzing
+std_s2dzing:
+  opencc_config: moran_s2dzing.json
+  option_name: std_s2dzing
   tips: all
   tags: [abc, number]
 
