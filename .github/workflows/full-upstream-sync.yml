@@ -1,0 +1,30 @@
+name: One-time full upstream sync
+
+on:
+  push:
+    paths:
+      - ".github/workflows/full-upstream-sync.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Overlay upstream while preserving local preferences
+        shell: bash
+        run: |
+          git remote add moran-upstream https://github.com/rimeinn/rime-moran.git
+          git fetch moran-upstream main --depth=1
+          git checkout moran-upstream/main -- .
+          git checkout HEAD -- squirrel.yaml weasel.yaml weasel.custom.yaml default.custom.yaml PY_c.custom.yaml tiger.custom.yaml tigress.custom.yaml moran_custom_phrases.txt user.yaml
+          git rm --ignore-unmatch .github/workflows/full-upstream-sync.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(moran): sync upstream files and preserve preferences"
+          git push
