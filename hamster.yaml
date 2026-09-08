@@ -196,7 +196,7 @@ rime:
   keyValueOfSwitchSimplifiedAndTraditional: traditionalization
   # RIME 重新部署时，是否覆盖词库文件
   # 如果使用自造词，需要改为 false, 否则部署时会覆盖键盘自造词文件
-  overrideDictFiles: true
+  overrideDictFiles: false
   # 覆盖词库文件的正则表达式
   # 使用场景：
   # 在开启 overrideDictFiles 后，每次重新部署会按照正则表达式符合的条件翻盖文件
