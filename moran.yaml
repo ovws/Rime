@@ -21,8 +21,9 @@ algebra:
   user_sentence_top:
     __append:
       __patch:
-        - moran_defs:/fly/qx_qo # ZRM-SPECIFIC
-        - moran_defs:/fly/xq_xo # ZRM-SPECIFIC
+        - moran_defs:/fly/qx_qo  # ZRM-SPECIFIC
+        - moran_defs:/fly/xq_xo  # ZRM-SPECIFIC
+        - moran_defs:/fly/wz_wk  # ZRM-SPECIFIC
         # 模糊音設置
         # - moran_defs:/bufen/z_zh
         # - moran_defs:/bufen/c_ch
@@ -35,20 +36,28 @@ algebra:
     __append:
       - derive|^(.+);(\w)(\w)$|$1$2$3o| # 全碼 YYXXo
       - derive|^(.+);(\w)(\w)$|$1$2$3/| # 全碼 YYXX/
-      - abbrev/^(.+);(\w)(\w)$/$1$2$3/ # 降低 YYXX 優先級
-      - derive/^(.+);(\w)(\w)$/$1$2/ # 構詞可以用 YYX
-      - derive/^(.+);(\w)(\w)$/$1/ # 構詞可以用 YY
+      - derive|^(.+);(\w)(\w)$|$1$2/|   # 三碼篩單字 YYX/ （實驗性）
+      - abbrev/^(.+);(\w)(\w)$/$1$2$3/  # 降低 YYXX 優先級
+      - derive/^(.+);(\w)(\w)$/$1$2/    # 構詞可以用 YYX
+      - derive/^(.+);(\w)(\w)$/$1/      # 構詞可以用 YY
       # ZRM-SPECIFIC: 特殊優化：部分音節字極少，幾乎不參與構詞，則提升對應四碼字的優先級
       # ZRM-SPECIFIC: （僅對自然碼雙拼有效，其他雙拼方案需作對應修改）
-      - derive/^(.+);(dd|bd|dw|df|yl|rw|fs|iw|pd|sw|cz|dn|zy|nw|kq|fe|bs|fc)$/$1$2/ # ZRM-SPECIFIC
-      - erase/^pp$/ # ZRM-SPECIFIC
-      - erase/^(.+);(.+)$/ # 刪除原始編碼以加速檢索
+      - derive/^(.+);(jb|wq|aq|av|dn|xh|bv|jz|hm|sn|cd|iw|xl|ak|zy|fy|uz|yx|wb|wr|yw|dz|qz|ms|at|xf|gi|gn|or|ux|ww|nw|fs|qk|rl|cq|sw|jv|cy|sq|dd|fp|ae|ix|td|ep|ar|wm|pd|et|yz|eh|ct|os|hx|zq|ew|fm|ab|kc|tf|fx|we|sz|wx|bq|ic|ez|bs|ej|oh|ps|pw|fr|pq|au|wc|wp|dt|qf|zc|vx|im|br|mw|un|qb|fi|zm|vn|oz|kt|rq|ay|fn|yc|um|eq|eu|cz|yq|tq|oi|ek|az|fv|zx|ut|vz|ry|ac|ws|af|qv|ea|qj|al|ol|on|sx|ap|df|eg|rz|ey|em|ag|hi|iz|ki|xz|xj|ad|ft|pt|op|vt|oj|kn|pr|hq|eb|ev|cx|zd|am|ov|oq|ym|ef|ot|mr|rd|sy|oc|rc|oe|fq|cn|ok|rn|bp|yv|uc|wk|oy|bt|je|ow|xg|jj|rw|pp|ja|wt|lf|xe|wy|kx|sm|qe|fw|gc|xa|cw|zn|tn|cc|jo|md|sd|ql|kq|it|bd|sc|wv|fc|dw|ob|vm|ed|jl|xo|fl|gq|gt|of|pv|wd|qa|xk|yd|fe|og|iq|oa|uq|om|xv|mv|as|ox|km|zt|od|ht|el|hn|st|wn|mt|wi|tz|aj|yg|bw|jf|jg|kz|es|xb|ax|rt|gx|bb|qo|yf|ex|rx|tt|us|qg|pe|zw|mp|qh|rm|hc|np|jh|cm|yl|eo|ra|vc|aw|tw|fk|gm|ec|be|vq|fd|jk|in)$/$1$2/  # ZRM-SPECIFIC
+      - erase/^pp$/                     # ZRM-SPECIFIC
+      - erase/^(.+);(.+)$/              # 刪除原始編碼以加速檢索
 
 key_bindings:
   # 分號用於次選
+  # ※ 注意，默認模式（moran.schema.yaml）的分號次選功能由 moran_processor.lua 提供，不使用該配置。
   moran_semicolon_for_2:
     __append:
       - { when: has_menu, accept: semicolon, send: "2" }
+
+  # Control+s 切換簡繁
+  # ※ 注意，默認模式（moran.schema.yaml）的 Ctrl+s 功能由 moran_processor.lua 提供，不使用該配置。
+  moran_ctrl_s:
+    __append:
+      - { when: has_menu, accept: Control+s, toggle: std_t2s }
 
   # 使用 tab 在不同音節間跳轉
   moran_tab:
@@ -59,172 +68,65 @@ key_bindings:
   # 一些功能的開關鍵
   moran_switches:
     __append:
-      - { when: has_menu, accept: "Control+s", toggle: traditionalization }
       - { when: has_menu, accept: "Control+u", toggle: unicode_comment }
       - { when: has_menu, accept: "Control+q", toggle: emoji }
       - { when: composing, accept: "Control+x", toggle: extended_charset }
-      - { when: has_menu, accept: "Control+Shift+0", toggle: std_opencc }
+      - { when: has_menu, accept: "Control+Shift+0", toggle: std_t }
+      - { when: has_menu, accept: "Control+Shift+parenright", toggle: std_t }
       - { when: has_menu, accept: "Control+i", toggle: chaifen }
       - { when: has_menu, accept: "Control+period", toggle: pinyinhint }
 
   # 使用大寫字母追加輸入到上一個音節末尾
   moran_capital_for_last_syllable:
     __append:
-      - {
-          when: has_menu,
-          accept: Shift+A,
-          send_sequence: "{Control+Left}a{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+B,
-          send_sequence: "{Control+Left}b{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+C,
-          send_sequence: "{Control+Left}c{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+D,
-          send_sequence: "{Control+Left}d{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+E,
-          send_sequence: "{Control+Left}e{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+F,
-          send_sequence: "{Control+Left}f{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+G,
-          send_sequence: "{Control+Left}g{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+H,
-          send_sequence: "{Control+Left}h{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+I,
-          send_sequence: "{Control+Left}i{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+J,
-          send_sequence: "{Control+Left}j{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+K,
-          send_sequence: "{Control+Left}k{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+L,
-          send_sequence: "{Control+Left}l{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+M,
-          send_sequence: "{Control+Left}m{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+N,
-          send_sequence: "{Control+Left}n{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+O,
-          send_sequence: "{Control+Left}o{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+P,
-          send_sequence: "{Control+Left}p{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+Q,
-          send_sequence: "{Control+Left}q{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+R,
-          send_sequence: "{Control+Left}r{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+S,
-          send_sequence: "{Control+Left}s{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+T,
-          send_sequence: "{Control+Left}t{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+U,
-          send_sequence: "{Control+Left}u{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+V,
-          send_sequence: "{Control+Left}v{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+W,
-          send_sequence: "{Control+Left}w{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+X,
-          send_sequence: "{Control+Left}x{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+Y,
-          send_sequence: "{Control+Left}y{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+Z,
-          send_sequence: "{Control+Left}z{Control+Right}",
-        }
-      - {
-          when: has_menu,
-          accept: Shift+BackSpace,
-          send_sequence: "{Control+Left}{BackSpace}{Control+Right}",
-        }
+      - { when: has_menu, accept: Shift+A, send_sequence: "{Control+Left}a{Control+Right}" }
+      - { when: has_menu, accept: Shift+B, send_sequence: "{Control+Left}b{Control+Right}" }
+      - { when: has_menu, accept: Shift+C, send_sequence: "{Control+Left}c{Control+Right}" }
+      - { when: has_menu, accept: Shift+D, send_sequence: "{Control+Left}d{Control+Right}" }
+      - { when: has_menu, accept: Shift+E, send_sequence: "{Control+Left}e{Control+Right}" }
+      - { when: has_menu, accept: Shift+F, send_sequence: "{Control+Left}f{Control+Right}" }
+      - { when: has_menu, accept: Shift+G, send_sequence: "{Control+Left}g{Control+Right}" }
+      - { when: has_menu, accept: Shift+H, send_sequence: "{Control+Left}h{Control+Right}" }
+      - { when: has_menu, accept: Shift+I, send_sequence: "{Control+Left}i{Control+Right}" }
+      - { when: has_menu, accept: Shift+J, send_sequence: "{Control+Left}j{Control+Right}" }
+      - { when: has_menu, accept: Shift+K, send_sequence: "{Control+Left}k{Control+Right}" }
+      - { when: has_menu, accept: Shift+L, send_sequence: "{Control+Left}l{Control+Right}" }
+      - { when: has_menu, accept: Shift+M, send_sequence: "{Control+Left}m{Control+Right}" }
+      - { when: has_menu, accept: Shift+N, send_sequence: "{Control+Left}n{Control+Right}" }
+      - { when: has_menu, accept: Shift+O, send_sequence: "{Control+Left}o{Control+Right}" }
+      - { when: has_menu, accept: Shift+P, send_sequence: "{Control+Left}p{Control+Right}" }
+      - { when: has_menu, accept: Shift+Q, send_sequence: "{Control+Left}q{Control+Right}" }
+      - { when: has_menu, accept: Shift+R, send_sequence: "{Control+Left}r{Control+Right}" }
+      - { when: has_menu, accept: Shift+S, send_sequence: "{Control+Left}s{Control+Right}" }
+      - { when: has_menu, accept: Shift+T, send_sequence: "{Control+Left}t{Control+Right}" }
+      - { when: has_menu, accept: Shift+U, send_sequence: "{Control+Left}u{Control+Right}" }
+      - { when: has_menu, accept: Shift+V, send_sequence: "{Control+Left}v{Control+Right}" }
+      - { when: has_menu, accept: Shift+W, send_sequence: "{Control+Left}w{Control+Right}" }
+      - { when: has_menu, accept: Shift+X, send_sequence: "{Control+Left}x{Control+Right}" }
+      - { when: has_menu, accept: Shift+Y, send_sequence: "{Control+Left}y{Control+Right}" }
+      - { when: has_menu, accept: Shift+Z, send_sequence: "{Control+Left}z{Control+Right}" }
+      - { when: has_menu, accept: Shift+BackSpace, send_sequence: "{Control+Left}{BackSpace}{Control+Right}" }
 
-  # 支持小鍵盤數字鍵和回車鍵
+  # 支持小鍵盤數字鍵、回車鍵和小數點
   moran_keypad:
     __append:
       - { when: composing, accept: KP_Enter, send: Return }
-      - { when: composing, accept: KP_0, send: "0" }
-      - { when: composing, accept: KP_1, send: "1" }
-      - { when: composing, accept: KP_2, send: "2" }
-      - { when: composing, accept: KP_3, send: "3" }
-      - { when: composing, accept: KP_4, send: "4" }
-      - { when: composing, accept: KP_5, send: "5" }
-      - { when: composing, accept: KP_6, send: "6" }
-      - { when: composing, accept: KP_7, send: "7" }
-      - { when: composing, accept: KP_8, send: "8" }
-      - { when: composing, accept: KP_9, send: "9" }
+      - { when: composing, accept: KP_0, send: '0' }
+      - { when: composing, accept: KP_1, send: '1' }
+      - { when: composing, accept: KP_2, send: '2' }
+      - { when: composing, accept: KP_3, send: '3' }
+      - { when: composing, accept: KP_4, send: '4' }
+      - { when: composing, accept: KP_5, send: '5' }
+      - { when: composing, accept: KP_6, send: '6' }
+      - { when: composing, accept: KP_7, send: '7' }
+      - { when: composing, accept: KP_8, send: '8' }
+      - { when: composing, accept: KP_9, send: '9' }
+      - { when: composing, accept: KP_Decimal, send: '.' }
 
   # 切換固詞
   moran_toggle_inflexible:
     __append:
-      - { when: has_menu, accept: Control+g, toggle: inflexible }
+      - { when: has_menu, accept: Control+Shift+G, toggle: inflexible }
 
 octagram:
   disable:
@@ -233,13 +135,13 @@ octagram:
   enable_for_sentence:
     __patch:
       grammar:
-        language: zh-hans-t-essay-bgw
+        language: zh-hant-t-essay-bgw
         collocation_max_length: 4
         collocation_min_length: 3
   enable_for_fixed:
     __patch:
       grammar:
-        language: zh-hans-t-essay-bgc
+        language: zh-hant-t-essay-bgc
         collocation_max_length: 4
         collocation_min_length: 2
       fixed/+:
