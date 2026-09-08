@@ -57,7 +57,7 @@ key_bindings:
   # ※ 注意，默認模式（moran.schema.yaml）的 Ctrl+s 功能由 moran_processor.lua 提供，不使用該配置。
   moran_ctrl_s:
     __append:
-      - { when: has_menu, accept: Control+s, toggle: std_t2s }
+      - { when: has_menu, accept: Control+s, toggle: std_s2t }
 
   # 使用 tab 在不同音節間跳轉
   moran_tab:
@@ -71,8 +71,8 @@ key_bindings:
       - { when: has_menu, accept: "Control+u", toggle: unicode_comment }
       - { when: has_menu, accept: "Control+q", toggle: emoji }
       - { when: composing, accept: "Control+x", toggle: extended_charset }
-      - { when: has_menu, accept: "Control+Shift+0", toggle: std_t }
-      - { when: has_menu, accept: "Control+Shift+parenright", toggle: std_t }
+      - { when: has_menu, accept: "Control+Shift+0", toggle: std_s }
+      - { when: has_menu, accept: "Control+Shift+parenright", toggle: std_s }
       - { when: has_menu, accept: "Control+i", toggle: chaifen }
       - { when: has_menu, accept: "Control+period", toggle: pinyinhint }
 
@@ -135,13 +135,13 @@ octagram:
   enable_for_sentence:
     __patch:
       grammar:
-        language: zh-hant-t-essay-bgw
+        language: zh-hans-t-essay-bgw
         collocation_max_length: 4
         collocation_min_length: 3
   enable_for_fixed:
     __patch:
       grammar:
-        language: zh-hant-t-essay-bgc
+        language: zh-hans-t-essay-bgc
         collocation_max_length: 4
         collocation_min_length: 2
       fixed/+:

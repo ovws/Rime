@@ -1,0 +1,16 @@
+# 个人默认行为：官方简体包 + 常用提示功能
+# 繁体不会默认出现；需手动切换“简/繁”开关才会转换为繁体。
+patch:
+  # 表情候选
+  switches/@3/reset: 1
+  # 只保留简体与手动繁体转换两个选项；默认简体。
+  switches/@4/+:
+    options: [std_s, std_s2t]
+    states: [简, 繁]
+    reset: 0
+  # 拆分显示
+  switches/@7/reset: 1
+  # 拼音显示
+  switches/@8/reset: 1
+  # 通用字符集仅显示简化字；切换“增广”仍是手动行为。
+  moran/charset: simp
