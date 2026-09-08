@@ -25,6 +25,7 @@ switches:
   - name: ascii_punct
     states: [ 。，, ．， ]
   - name: emoji
+    reset: 1
     states: [ 🈚, 🈶 ]
   - options: [ std_t2s, std_t ]
     states: [ 简, 繁 ]
@@ -33,8 +34,10 @@ switches:
   - name: extended_charset
     states: [ 通用, 增廣 ]
   - name: chaifen
+    reset: 1
     states: [ 不拆, 扌斥 ]
   - name: pinyinhint
+    reset: 1
     states: [ 🔇, 🔊 ]
   - name: unicode_comment
     states: [ U開, U關 ]

@@ -16,6 +16,7 @@ switches:
   - name: ascii_punct
     states: [ 。，, ．， ]
   - name: emoji
+    reset: 1
     states: [ 🈚, 🈶 ]
   - options: [ std_t2s, std_t ]
     states: [ 简, 繁 ]
